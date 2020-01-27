@@ -70,6 +70,12 @@ class MainActivity : AppCompatActivity() {
                     selectedFragment = ProfileFragment()
                 }
             }
+            if(selectedFragment != null){
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.fragment_container,
+                    selectedFragment!!
+                ).commit()
+            }
             false
         }
 
