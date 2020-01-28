@@ -17,7 +17,7 @@ import com.example.socialgramgabriel.Fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
-    internal var selectedFragment: Fragment? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,17 +26,12 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        supportFragmentManager.beginTransaction().replace(
-            R.id.fragment_container,
-            HomeFragment()
-        ).commit()
-
-     //   moveToFragment(HomeFragment())
+        moveToFragment(HomeFragment())
     }
 
     private fun moveToFragment(fragment: Fragment) {
         val fragmentTrans = supportFragmentManager.beginTransaction()
-     //   fragmentTrans.replace(R.id.fragment_container, fragment)
+        fragmentTrans.replace(R.id.fragment_container, fragment)
         fragmentTrans.commit()
     }
 
@@ -44,14 +39,12 @@ class MainActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> {
-
-                  //  moveToFragment(HomeFragment())
-                    selectedFragment = HomeFragment()
+                    moveToFragment(HomeFragment())
+                    return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_search -> {
-
-                 //   moveToFragment(SearchFragment())
-                    selectedFragment = SearchFragment()
+                    moveToFragment(SearchFragment())
+                    return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_add_post -> {
 
@@ -60,21 +53,13 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_notifications -> {
-
-                //    moveToFragment(NotificationsFragment())
-                    selectedFragment = NotificationsFragment()
+                    moveToFragment(NotificationsFragment())
+                    return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_profile -> {
-
-                  //  moveToFragment(ProfileFragment())
-                    selectedFragment = ProfileFragment()
+                    moveToFragment(ProfileFragment())
+                    return@OnNavigationItemSelectedListener true
                 }
-            }
-            if(selectedFragment != null){
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                    selectedFragment!!
-                ).commit()
             }
             false
         }
