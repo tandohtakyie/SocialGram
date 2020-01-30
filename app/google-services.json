@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "913440998906",
+    "firebase_url": "https://socialgram-e1619.firebaseio.com",
+    "project_id": "socialgram-e1619",
+    "storage_bucket": "socialgram-e1619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913440998906:android:181036b10e6f2093b09043",
+        "android_client_info": {
+          "package_name": "com.example.socialgramgabriel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913440998906-g6s8jdoknkofjekft7te0lba85g7l8p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACskuVtt2mzlEElhhoeioKGUILk0FN6bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913440998906-g6s8jdoknkofjekft7te0lba85g7l8p7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
