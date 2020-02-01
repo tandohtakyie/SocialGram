@@ -94,7 +94,7 @@
         android:inputType="text" />
 
     <Button
-        android:id="@+id/logout_btn_"
+        android:id="@+id/logout_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/delete_account_btn"
