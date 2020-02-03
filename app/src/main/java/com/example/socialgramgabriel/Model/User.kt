@@ -1,12 +1,21 @@
 package com.example.socialgramgabriel.Model
 
-class User(
-    private var username: String,
-    private var fullName: String,
-    private var bio: String,
-    private var image: String,
-    private var uid: String
-) {
+class User{
+
+private var username: String = ""
+private var fullName: String = ""
+private var bio: String = ""
+private var image: String = ""
+private var uid: String = ""
+
+    constructor()
+    constructor(username: String, fullName: String, bio: String, image: String, uid: String) {
+        this.username = username
+        this.fullName = fullName
+        this.bio = bio
+        this.image = image
+        this.uid = uid
+    }
 
 
     fun getUsername(): String{
