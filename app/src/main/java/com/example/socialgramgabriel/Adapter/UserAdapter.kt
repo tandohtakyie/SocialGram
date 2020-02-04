@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socialgramgabriel.Fragments.HomeFragment
+import com.example.socialgramgabriel.Fragments.ProfileFragment
 import com.example.socialgramgabriel.Model.User
 import com.example.socialgramgabriel.R
 import com.google.firebase.auth.FirebaseAuth
@@ -49,6 +51,15 @@ class UserAdapter(
 
         checkFollowingStatus(user.getUid(), holder.followButton)
 
+        holder.itemView.setOnClickListener(View.OnClickListener {
+            val pref = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
+            pref.putString("profileId", user.getUid())
+            pref.apply()
+
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, ProfileFragment()).commit()
+        })
+
         holder.followButton.setOnClickListener {
             if (holder.followButton.text.toString() == "Follow") {
                 firebaseUser?.uid.let { it1 ->
@@ -58,16 +69,15 @@ class UserAdapter(
                         .setValue(true).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 firebaseUser?.uid.let { it1 ->
-                                    {
-                                        FirebaseDatabase.getInstance().reference
-                                            .child("Follow").child(user.getUid())
-                                            .child("Followers").child(it1.toString())
-                                            .setValue(true).addOnCompleteListener { task ->
-                                                if (task.isSuccessful) {
+                                    FirebaseDatabase.getInstance().reference
+                                        .child("Follow").child(user.getUid())
+                                        .child("Followers").child(it1.toString())
+                                        .setValue(true).addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
 
-                                                }
                                             }
-                                    }
+                                        }
+
                                 }
                             }
                         }
@@ -80,16 +90,15 @@ class UserAdapter(
                         .removeValue().addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 firebaseUser?.uid.let { it1 ->
-                                    {
-                                        FirebaseDatabase.getInstance().reference
-                                            .child("Follow").child(user.getUid())
-                                            .child("Followers").child(it1.toString())
-                                            .removeValue().addOnCompleteListener { task ->
-                                                if (task.isSuccessful) {
+                                    FirebaseDatabase.getInstance().reference
+                                        .child("Follow").child(user.getUid())
+                                        .child("Followers").child(it1.toString())
+                                        .removeValue().addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
 
-                                                }
                                             }
-                                    }
+                                        }
+
                                 }
                             }
                         }
