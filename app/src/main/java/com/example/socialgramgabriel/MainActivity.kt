@@ -47,9 +47,8 @@ class MainActivity : AppCompatActivity() {
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_add_post -> {
-
-                 //   item.isChecked = false
-                   // startActivity(Intent(this@MainActivity, AddPostActivity::class.java))
+                    startActivity(Intent(this@MainActivity, AddPostActivity::class.java))
+                    item.isChecked = false
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.nav_notifications -> {
