@@ -82,11 +82,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun retrievePostsFromPeopleYouFollow() {
-        val postRef = FirebaseDatabase.getInstance().reference.child("Post")
+        val postRef = FirebaseDatabase.getInstance().reference.child("Posts")
 
         postRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                 postList?.clear()
+
                 for (snapshot in dataSnapshot.children) {
                     val post = snapshot.getValue(Post::class.java)
 

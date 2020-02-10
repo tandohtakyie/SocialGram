@@ -30,6 +30,24 @@ class PostAdapter(
 
     private var fireBaseUser: FirebaseUser? = null
 
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(mContext).inflate(R.layout.posts_layout, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return mPost.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        fireBaseUser = FirebaseAuth.getInstance().currentUser
+        val post = mPost[position]
+        Picasso.get().load(post.getPostImage()).into(holder.postImage)
+
+        publisherInfo(holder.profileImage, holder.username, holder.publisher, post.getPublisher())
+    }
+
     inner class ViewHolder(@NonNull itemView: View) : RecyclerView.ViewHolder(itemView) {
         var profileImage: CircleImageView
         var postImage: ImageView
@@ -56,22 +74,6 @@ class PostAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.posts_layout, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return mPost.size
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        fireBaseUser = FirebaseAuth.getInstance().currentUser
-        val post = mPost[position]
-        Picasso.get().load(post.getPostImage()).into(holder.postImage)
-
-        publisherInfo(holder.profileImage, holder.username, holder.publisher, post.getPublisher())
-    }
 
     private fun publisherInfo(
         profileImage: CircleImageView,
@@ -81,19 +83,22 @@ class PostAdapter(
     ) {
 
         val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(publisherID)
-            userRef.addValueEventListener(object : ValueEventListener{
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue<User>(User::class.java)
                     Picasso.get().load(user!!.getImage()).placeholder(R.drawable.bean)
                         .into(profileImage)
-                    username.text = user.getUsername()
-                    publisher.text = user.getFullName()
+                    username.text = user!!.getUsername()
+                    publisher.text = user!!.getFullName()
                 }
-                override fun onCancelled(p0: DatabaseError) {
+            }
 
-                }
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
 
 
-            })
+        })
     }
 }
