@@ -89,7 +89,7 @@ class AccountSettingsActivity : AppCompatActivity() {
 
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue<User>(User::class.java)
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.bean)
+                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.defaultprofileimage)
                         .into(profile_image_view_profile_frag)
                     username_profile_frag.setText(user.getUsername())
                     full_name_profile_frag.setText(user.getFullName())

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
+import com.example.socialgramgabriel.CommentActivity
 import com.example.socialgramgabriel.MainActivity
 import com.example.socialgramgabriel.Model.Post
 import com.example.socialgramgabriel.Model.User
@@ -77,6 +78,13 @@ class PostAdapter(
 //                val intent = Intent(mContext, MainActivity::class.java)
 //                mContext.startActivity(intent)
             }
+        }
+
+        holder.commentButton.setOnClickListener {
+            val intentComment = Intent(mContext, CommentActivity::class.java)
+            intentComment.putExtra("postId", post.getPostID())
+            intentComment.putExtra("publisherId", post.getPublisher())
+            mContext.startActivity(intentComment)
         }
     }
 
@@ -165,7 +173,7 @@ class PostAdapter(
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue<User>(User::class.java)
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.bean)
+                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.defaultprofileimage)
                         .into(profileImage)
                     username.text = user!!.getUsername()
                     publisher.text = user!!.getFullName()
