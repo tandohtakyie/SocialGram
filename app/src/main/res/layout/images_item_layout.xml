@@ -6,8 +6,8 @@
     android:layout_margin="1dp">
     <ImageView
         android:id="@+id/post_image"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
+        android:layout_width="142dp"
+        android:layout_height="142dp"
         android:src="@drawable/defaultprofileimage"
         android:scaleType="centerCrop"/>
 

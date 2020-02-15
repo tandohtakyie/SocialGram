@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.socialgramgabriel.Fragments.PostDetailsFragment
 import com.example.socialgramgabriel.Model.Post
 import com.example.socialgramgabriel.R
 import com.squareup.picasso.Picasso
@@ -41,5 +43,14 @@ class MyImagesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post: Post = mPost!![position]
+        Picasso.get().load(post.getPostImage()).into(holder.postImage)
+
+        holder.postImage.setOnClickListener {
+            val editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit()
+            editor.putString("postId", post.getPostID())
+            editor.apply()
+            (mContext as FragmentActivity).supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, PostDetailsFragment()).commit()
+        }
     }
 }
