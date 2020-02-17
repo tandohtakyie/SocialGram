@@ -63,6 +63,8 @@ class PostAdapter(
 
         getTotalComments(holder.comments, post.getPostID())
 
+        checkSavedStatus(post.getPostID(), holder.saveButton)
+
         holder.likeButton.setOnClickListener {
             if (holder.likeButton.tag == "Like") {
                 FirebaseDatabase.getInstance().reference
@@ -95,6 +97,22 @@ class PostAdapter(
             intentComment.putExtra("publisherId", post.getPublisher())
             mContext.startActivity(intentComment)
         }
+
+        holder.saveButton.setOnClickListener {
+            if (holder.saveButton.tag == "Save") {
+                FirebaseDatabase.getInstance().reference
+                    .child("Saves")
+                    .child(fireBaseUser!!.uid)
+                    .child(post.getPostID())
+                    .setValue(true)
+            } else {
+                FirebaseDatabase.getInstance().reference
+                    .child("Saves")
+                    .child(fireBaseUser!!.uid)
+                    .child(post.getPostID())
+                    .removeValue()
+            }
+        }
     }
 
     private fun numberOfLikes(likes: TextView, postID: String) {
@@ -125,7 +143,8 @@ class PostAdapter(
         commentRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    comments.text = "View all " + dataSnapshot.childrenCount.toString() + " comments"
+                    comments.text =
+                        "View all " + dataSnapshot.childrenCount.toString() + " comments"
                 }
             }
 
@@ -202,7 +221,8 @@ class PostAdapter(
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val user = dataSnapshot.getValue<User>(User::class.java)
-                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.defaultprofileimage)
+                    Picasso.get().load(user!!.getImage())
+                        .placeholder(R.drawable.defaultprofileimage)
                         .into(profileImage)
                     username.text = user!!.getUsername()
                     publisher.text = user!!.getFullName()
@@ -214,6 +234,26 @@ class PostAdapter(
             }
 
 
+        })
+    }
+
+    private fun checkSavedStatus(postID: String, imageView: ImageView) {
+        val savesRef =
+            FirebaseDatabase.getInstance().reference.child("Saves").child(fireBaseUser!!.uid)
+        savesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.child(postID).exists()) {
+                    imageView.setImageResource(R.drawable.ic_bookmark_black_24dp)
+                    imageView.tag = "Saved"
+                } else {
+                    imageView.setImageResource(R.drawable.ic_bookmark_border_black_24dp)
+                    imageView.tag = "Save"
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
         })
     }
 }
