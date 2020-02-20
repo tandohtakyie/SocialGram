@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socialgramgabriel.CommentActivity
 import com.example.socialgramgabriel.MainActivity
 import com.example.socialgramgabriel.Model.Post
 import com.example.socialgramgabriel.Model.User
 import com.example.socialgramgabriel.R
-import com.example.socialgramgabriel.ShowUsersActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +23,6 @@ import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_account_settings.*
-import kotlinx.android.synthetic.main.fragment_profile.view.*
 import kotlinx.android.synthetic.main.posts_layout.view.*
 
 class PostAdapter(
@@ -85,14 +82,6 @@ class PostAdapter(
 //                val intent = Intent(mContext, MainActivity::class.java)
 //                mContext.startActivity(intent)
             }
-        }
-
-        holder.likes.setOnClickListener {
-            val intent = Intent(mContext, ShowUsersActivity::class.java)
-            intent.putExtra("id", post.getPostID())
-            intent.putExtra("title", "followers")
-            mContext.startActivity(intent)
-
         }
 
         holder.commentButton.setOnClickListener {
