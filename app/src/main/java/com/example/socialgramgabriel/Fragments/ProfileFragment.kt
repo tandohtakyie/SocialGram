@@ -18,6 +18,7 @@ import com.example.socialgramgabriel.Model.Post
 import com.example.socialgramgabriel.Model.User
 
 import com.example.socialgramgabriel.R
+import com.example.socialgramgabriel.ShowUsersActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -107,6 +108,21 @@ class ProfileFragment : Fragment() {
         savedImagesButton.setOnClickListener {
             recyclerViewSavedImages.visibility = View.VISIBLE
             recyclerViewUploadImages.visibility = View.GONE
+        }
+
+
+        view.total_followers.setOnClickListener{
+            val intent = Intent(context, ShowUsersActivity::class.java)
+            intent.putExtra("id", profileId)
+            intent.putExtra("title", "followers")
+            startActivity(intent)
+        }
+
+        view.total_following.setOnClickListener{
+            val intent = Intent(context, ShowUsersActivity::class.java)
+            intent.putExtra("id", profileId)
+            intent.putExtra("title", "following")
+            startActivity(intent)
         }
 
 
