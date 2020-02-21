@@ -126,7 +126,6 @@ class ProfileFragment : Fragment() {
         }
 
 
-
         view.edit_account_settings_btn.setOnClickListener {
             when (view.edit_account_settings_btn.text.toString()) {
                 "Edit Profile" -> startActivity(
@@ -261,53 +260,6 @@ class ProfileFragment : Fragment() {
             }
 
 
-        })
-    }
-
-    private fun mySaves() {
-        mySavesImag = ArrayList()
-        val savedRef = FirebaseDatabase.getInstance().reference
-            .child("Saves")
-            .child(fireBaseUser.uid)
-
-        savedRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (snapshot in dataSnapshot.children) {
-                        (mySavesImag as ArrayList<String>).add(snapshot.key!!)
-                    }
-                    readSavedImagesData()
-                }
-            }
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
-        })
-    }
-
-    private fun readSavedImagesData() {
-        val postsRef = FirebaseDatabase.getInstance().reference.child("Posts")
-
-        postsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    (postListSaved as ArrayList<Post>).clear()
-
-                    for (snapshot in dataSnapshot.children) {
-                        val post = snapshot.getValue(Post::class.java)
-                        for (key in mySavesImag!!) {
-                            if (post!!.getPostID() == key) {
-                                (postListSaved as ArrayList<Post>).add(post!!)
-                            }
-                        }
-                    }
-                    myImagesAdapterSavedImg!!.notifyDataSetChanged()
-                }
-            }
-
-            override fun onCancelled(p0: DatabaseError) {
-
-            }
         })
     }
 
